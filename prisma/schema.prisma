@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String    @unique
+  password  String
+  salt      String // Added to store the salt for password hashing
+  address   String?
+  admin     Boolean
+  projects  Project[] @relation(fields: [], references: [])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Project {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId // MongoDB ObjectId
+  projectName String
+  envType     String // Environment type (e.g., Node, React)
+  DeployUrl   String? // URL for the project
+  CodeUrl     String? // Code storing url
+  size        String?
+  userId      String   @db.ObjectId // Foreign key to User
+  user        User     @relation(fields: [userId], references: [id]) // Relation to User
+  createdAt   DateTime @default(now()) // Auto-set on creation
+  updatedAt   DateTime @updatedAt
+}
+
+model Otp {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  otp       String
+  email     String
+  createdAt DateTime @default(now())
+}
