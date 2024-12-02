@@ -8,7 +8,7 @@ const { userCache } = require("../global/constants");
  */
 async function verifyToken(req, res, next) {
   // Get the token from cookies
-  const token = req?.headers?.cookie?.split("=")?.[1]; // Assuming you are using a cookie-parser middleware
+  const token = req?.headers?.cookie?.split("=")?.[1];
   if (isEmpty(token)) {
     console.log(token);
     return res

@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 const { generateOTP } = require("./stringManupulator");
+const { prisma } = require("../../prisma");
 
 // Gmail service setup
 const transporter = nodemailer.createTransport({
@@ -13,9 +14,47 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+exports.verifyotp = async ({ email, otp }) => {
+  try {
+    // Check if OTP exists in the database
+    const otpRecord = await prisma.otp.findFirst({
+      where: {
+        email,
+        otp,
+      },
+    });
+
+    if (otpRecord) {
+      // OTP found and valid
+      console.log("Login successful for:", email);
+
+      // Optionally, delete the OTP after successful verification
+      await prisma.otp.deleteMany({
+        where: {
+          email,
+        },
+      });
+
+      return { success: true, message: "Login successful" };
+    } else {
+      // OTP not found or expired
+      return { success: false, message: "Invalid or expired OTP" };
+    }
+  } catch (error) {
+    console.error("Error verifying OTP:", error);
+    return { success: false, message: "An error occurred" };
+  }
+};
+
 exports.sentOtp = async ({ receiverEmail, receiverName }) => {
   try {
     let otp = generateOTP();
+    await prisma.otp.create({
+      data: {
+        email: receiverEmail,
+        otp,
+      },
+    });
     console.log("sending otp to ", receiverEmail);
     await transporter.sendMail({
       from: "no-reply@gmail.com", // Sender

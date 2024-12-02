@@ -1,5 +1,9 @@
 const router = require("express").Router();
-const { signIn, signUp, verifyotp } = require("../src/controlllers/auth");
+const {
+  signIn,
+  signUp,
+  verifyotpcontoller,
+} = require("../src/controlllers/auth");
 const {
   getAllProjectsDetails,
   createNewProject,
@@ -12,7 +16,7 @@ router.get("/healthcheck", (req, res) => {
 
 router.post("/signin", signIn);
 router.post("/signup", signUp);
-router.post("/verifyotp", verifyotp);
+router.post("/verifyotp", verifyToken, verifyotpcontoller);
 router.get("/createNewProject", verifyToken, createNewProject);
 router.get("/projectsDetails", verifyToken, getAllProjectsDetails);
 module.exports = {
