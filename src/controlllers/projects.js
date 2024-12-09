@@ -3,9 +3,11 @@ const { prisma } = require("../../prisma");
 async function createNewProject(req, res, next) {
   //Get user details from the verification
   let userDetails = res.locals.userDetails;
-  console.log("Requested user details ", userDetails);
+  console.log("Requested user details ", res.locals.userDetails);
 
   const { projectName, envType, size } = req.body;
+  const fileDetails = res.locals.fileDetails;
+  console.log("file details", fileDetails);
   try {
     const project = await prisma.project.create({
       data: {
@@ -15,6 +17,7 @@ async function createNewProject(req, res, next) {
         user: {
           connect: { id: userDetails?.id },
         },
+        CodeUrl: res.locals.fileDetails.path,
       },
     });
 

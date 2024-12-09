@@ -37,8 +37,8 @@ async function verifyToken(req, res, next) {
     }
     console.log("userCache", userCache);
     // Check if email exists in the cache
-    if (userCache[email]) {
-      res.locals = { userDetails: userCache[email] }; // Attach email to request object
+    if (userCache.get(email)) {
+      res.locals = { userDetails: userCache.get(email) }; // Attach email to request object
       return next(); // User is authenticated
     }
 
@@ -61,11 +61,12 @@ async function verifyToken(req, res, next) {
     }
 
     // Cache the email in memory for future requests
-    userCache[email] = userDetails;
+    userCache.set(email, user);
 
+    console.log("user cache ", userCache);
     // Attach email to the request object
-    res.locals = { userDetails: userDetails };
-
+    res.locals = { userDetails: user };
+    console.log("res.locals ", res.locals.userDetails);
     return next(); // Proceed to the next middleware
   } catch (err) {
     // Handle token verification errors

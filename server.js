@@ -1,6 +1,7 @@
 const express = require("express");
 const { router } = require("./router/user.router");
 const { createTTLIndex } = require("./prisma");
+const { handleErrors } = require("./src/middlewares/errorMiddleware");
 const app = express();
 const PORT = process.env.PORT;
 app.use(express.json());
@@ -15,6 +16,7 @@ app.use(express.json());
     createTTLIndex();
   }
   app.use("/api", router);
+  app.use(handleErrors);
 })();
 
 app.listen(PORT, () => {
