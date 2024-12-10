@@ -1,4 +1,5 @@
 const { prisma } = require("../../prisma");
+const { uploadZipFile } = require("../lib/cloudnary.lib");
 
 async function createNewProject(req, res, next) {
   //Get user details from the verification
@@ -9,6 +10,7 @@ async function createNewProject(req, res, next) {
   const fileDetails = res.locals.fileDetails;
   console.log("file details", fileDetails);
   try {
+    const uploadFileDetails = await uploadZipFile(res.locals.fileDetails.path);
     const project = await prisma.project.create({
       data: {
         projectName: projectName,
@@ -17,10 +19,9 @@ async function createNewProject(req, res, next) {
         user: {
           connect: { id: userDetails?.id },
         },
-        CodeUrl: res.locals.fileDetails.path,
+        CodeUrl: uploadFileDetails.secure_url,
       },
     });
-
     console.log("Project created successfully:", project);
     return res.json({
       status: true,

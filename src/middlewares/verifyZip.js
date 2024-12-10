@@ -2,7 +2,7 @@ const AdmZip = require("adm-zip");
 const path = require("path");
 const fs = require("fs");
 const { projectConfig } = require("../global/constants");
-const { deleteFile } = require("../lib/security");
+const { deleteFile } = require("../utils/security");
 
 // Middleware to validate the uploaded zip file
 const validateZip = (req, res, next) => {

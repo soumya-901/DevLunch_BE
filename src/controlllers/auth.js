@@ -1,8 +1,8 @@
 const { prisma } = require("../../prisma");
-const { hashPassword, verifyPassword } = require("../lib/security");
-const { isEmpty } = require("../lib/stringManupulator");
-const { generateToken } = require("../lib/jwtToken");
-const { sentOtp, verifyotp } = require("../lib/mailer");
+const { hashPassword, verifyPassword } = require("../utils/security");
+const { isEmpty } = require("../utils/stringManupulator");
+const { generateToken } = require("../utils/jwtToken");
+const { sentOtp, verifyotp } = require("../utils/mailer");
 
 // Sign Up Module
 async function signUp(req, res) {

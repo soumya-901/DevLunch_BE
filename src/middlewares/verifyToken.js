@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { prisma } = require("../../prisma");
-const { isEmpty } = require("../lib/stringManupulator");
+const { isEmpty } = require("../utils/stringManupulator");
 const { userCache } = require("../global/constants");
 
 /**
