@@ -7,6 +7,7 @@ const {
 const {
   getAllProjectsDetails,
   createNewProject,
+  downloadProject,
 } = require("../src/controlllers/projects");
 const { verifyToken } = require("../src/middlewares/verifyToken");
 const { validateZip } = require("../src/middlewares/verifyZip");
@@ -47,6 +48,7 @@ router.post(
   createNewProject
 );
 router.get("/projectsDetails", verifyToken, getAllProjectsDetails);
+router.post("/downloadCodeFile", downloadProject);
 module.exports = {
   router,
 };

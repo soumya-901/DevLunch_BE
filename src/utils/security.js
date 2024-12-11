@@ -26,7 +26,9 @@ const verifyPassword = (password, hash, salt) => {
  */
 const deleteFile = async (filePath) => {
   try {
+    console.log("Deleting file from ", filePath);
     await fs.unlink(filePath); // Attempt to delete the file
+
     return {
       success: true,
       message: `File at '${filePath}' deleted successfully.`,

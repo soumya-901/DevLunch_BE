@@ -28,7 +28,7 @@ model User {
 
 model Project {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId // MongoDB ObjectId
-  projectName String
+  projectName String   @unique
   envType     String // Environment type (e.g., Node, React)
   DeployUrl   String? // URL for the project
   CodeUrl     String? // Code storing url
