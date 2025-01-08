@@ -41,7 +41,7 @@ model Project {
   schedule     Boolean  @default(true)
   pid          String?
   port         String?
-  source       String
+  source       String // defining what is the source of the code for now [github,zip]
 }
 
 model Otp {
