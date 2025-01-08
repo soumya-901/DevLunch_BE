@@ -9,7 +9,7 @@ const projectConfig = {
     runCmd: "node server.js", // Example run command
   },
   react: {
-    requiredFiles: ["package.json", "src/App.js"],
+    requiredFiles: ["package.json", "src/App.jsx"],
     forbiddenFolders: ["node_modules", ".git"],
     sizeLimitMB: 50, // Maximum size in MB
     runCmd: "npm start", // Example run command

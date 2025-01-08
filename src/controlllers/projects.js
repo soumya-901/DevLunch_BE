@@ -8,7 +8,7 @@ async function createNewProject(req, res, next) {
   let userDetails = res.locals.userDetails;
   console.log("Requested user details ", res.locals.userDetails);
 
-  const { projectName, envType, size } = req.body;
+  const { projectName, envType, size, envVariables, source } = req.body;
   const fileDetails = res.locals.fileDetails;
   console.log("file details", fileDetails);
   try {
@@ -22,6 +22,8 @@ async function createNewProject(req, res, next) {
           connect: { id: userDetails?.id },
         },
         CodeUrl: fileDetails?.path,
+        envVariables: JSON.parse(envVariables),
+        source: source,
       },
     });
     console.log("Project created successfully:", project);
@@ -33,7 +35,7 @@ async function createNewProject(req, res, next) {
   } catch (error) {
     console.error("Error creating project:", error);
     next(error);
-    throw error;
+    return error;
   }
 }
 

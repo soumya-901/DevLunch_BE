@@ -35,6 +35,13 @@ async function verifyToken(req, res, next) {
         .status(401)
         .json({ message: "Unauthorized access: Email not found in token" });
     }
+    // Check if the provided token is not otp token
+    if (!userDetails?.updateat && req?.url !== "/verifyotp") {
+      return res.status(401).json({
+        message: "Otp token can't used for data accessing",
+        code: "INVALID_TOKEN",
+      });
+    }
     console.log("userCache", userCache);
     // Check if email exists in the cache
     if (userCache.get(email)) {

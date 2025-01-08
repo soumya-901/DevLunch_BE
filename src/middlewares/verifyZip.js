@@ -33,7 +33,7 @@ const validateZip = (req, res, next) => {
     const zip = new AdmZip(req.file.path);
     const zipEntries = zip.getEntries();
 
-    console.log("file details from zip ", zipEntries);
+    // console.log("file details from zip ", zipEntries);
     let requiredFilesFound = new Set(config.requiredFiles);
 
     console.log("requrired files set ", requiredFilesFound);
